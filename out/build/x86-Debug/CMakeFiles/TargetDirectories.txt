@@ -1,0 +1,14 @@
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/CMakeFiles/edit_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll/CMakeFiles/SandSDll.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll/CMakeFiles/edit_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll/CMakeFiles/rebuild_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll64/CMakeFiles/SandSDll64.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll64/CMakeFiles/edit_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSDll64/CMakeFiles/rebuild_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExe/CMakeFiles/edit_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExe/CMakeFiles/SandSExe.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExe/CMakeFiles/rebuild_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExeHidden/CMakeFiles/SandSExeHidden.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExeHidden/CMakeFiles/edit_cache.dir
+C:/Users/ayafi/source/repos/Win32/SandS/out/build/x86-Debug/SandSExeHidden/CMakeFiles/rebuild_cache.dir

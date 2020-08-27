@@ -1,0 +1,190 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "SandSDll",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "SandSDll",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "SandSDll64",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "SandSDll64",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "SandSExe",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "SandSExe",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "SandSExeHidden",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "SandSExeHidden",
+					"targetIndexes" : 
+					[
+						3
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "SandS"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "SandSDll",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "SandSDll64",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "SandSExe",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "SandSExeHidden",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SandSDll::@2e16dea841c1c1f64026",
+					"jsonFile" : "target-SandSDll-Release-d389bb476bf1c6106d6b.json",
+					"name" : "SandSDll",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "SandSDll64::@6eec238a36c80177b579",
+					"jsonFile" : "target-SandSDll64-Release-1d9ba6208e42ee4460e2.json",
+					"name" : "SandSDll64",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "SandSExe::@923baa4809458816ca08",
+					"jsonFile" : "target-SandSExe-Release-700c49972df9c8d9a686.json",
+					"name" : "SandSExe",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "SandSExeHidden::@6a84bc0da3afe7c73b6e",
+					"jsonFile" : "target-SandSExeHidden-Release-a12163a5a3cd6c25d52b.json",
+					"name" : "SandSExeHidden",
+					"projectIndex" : 4
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/ayafi/source/repos/Win32/SandS/out/build/x64-Release",
+		"source" : "C:/Users/ayafi/source/repos/Win32/SandS"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

@@ -1,0 +1,153 @@
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+
+IDI_SANDSEXE       ICON         "SandSExe.ico"
+IDI_SMALL               ICON         "small.ico"
+IDI_TEST ICON "test.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDM_TRAY_R MENU
+BEGIN
+    POPUP "Tray R"
+    BEGIN
+        MENUITEM "設定", IDM_APP_CONFIG
+        MENUITEM SEPARATOR
+        MENUITEM "バージョン情報", IDM_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "終了", IDM_APP_EXIT
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDC_SANDSEXE ACCELERATORS
+BEGIN
+    "?",            IDM_ABOUT,              ASCII,  ALT
+    "/",            IDM_ABOUT,              ASCII,  ALT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About SandSExe"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "SandSExe, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (c) 2020",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_CONFIGBOX DIALOGEX 0, 0, 309, 118
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "設定"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,198,97,50,14
+    PUSHBUTTON      "キャンセル",IDCANCEL,252,97,50,14
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32", TBS_AUTOTICKS | WS_TABSTOP, 53, 20, 242, 24
+    LTEXT           "スペース長押し判定",IDC_STATIC,18,10,100,8
+    LTEXT           "ms", IDC_STATIC1, 20, 25, 33, 8
+    LTEXT           "モード", IDC_STATIC, 18, 48, 33, 8
+    CONTROL         "OFF", IDC_RADIO1, "Button", BS_AUTORADIOBUTTON, 20, 60, 30, 10
+    CONTROL         "日本語入力時のみ", IDC_RADIO2, "Button", BS_AUTORADIOBUTTON, 60, 60, 70, 10
+    CONTROL         "IME 有効時のみ", IDC_RADIO3, "Button", BS_AUTORADIOBUTTON, 140, 60, 80, 10
+    CONTROL         "常時 ON", IDC_RADIO4, "Button", BS_AUTORADIOBUTTON, 230, 60, 40, 10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+1 TEXTINCLUDE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+   IDC_SANDSEXE     "SANDSEXE"
+   IDS_APP_TITLE    "SandSExe"
+   IDM_TRAY_R       "SandSTrayR"
+END
+
+#endif
+/////////////////////////////////////////////////////////////////////////////
+
