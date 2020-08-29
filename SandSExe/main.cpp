@@ -5,19 +5,17 @@
 
 #include "resource.h"
 #include "LowLevelKeyboardHook.hpp"
-#include "../SandSDll/KeyboardHook.hpp"
 #include "SandSTrayWindow.hpp"
+#include <Shlwapi.h>
 
 #include <cstdlib>
 #include <sstream>
 #include <string>
 #include <optional>
 
-#pragma comment(lib, "SandSDll.lib")
-
 namespace {
     constexpr int MAX_LOADSTRING = 100;
-    constexpr UINT WM_UPDATE_IME_STATE = WM_USER + 101;
+    const UINT WM_UPDATE_IME_STATE = ::RegisterWindowMessage(L"WM_UPDATE_IME_STATE");
 
     // グローバル変数
     HINSTANCE hInst;                                // 現在のインターフェイス
@@ -25,25 +23,21 @@ namespace {
 
     std::optional<SandSTrayWindow> trayWnd;
 
-    LPCTSTR CLASS_NAME_32 = _T("SandSWindowClass32");
-    LPCTSTR CLASS_NAME_64 = _T("SandSWindowClass64");
-#ifndef _WIN64
+    LPCTSTR CLASS_NAME_HIDDEN_32 = _T("SandSHiddenWindowClass32");
+    LPCTSTR CLASS_NAME_HIDDEN_64 = _T("SandSHiddenWindowClass64");
+    LPCTSTR CLASS_NAME_TRAY = _T("SandSTrayWindowClass");
+    LPCTSTR CLASS_NAME = CLASS_NAME_TRAY;
+
 #ifndef NDEBUG
-    LPCTSTR HIDDEN_EXE_PATH = _T("../../x64-Debug/bin/SandSExeHidden.exe");
+    LPCTSTR HIDDEN_EXE_32_PATH = _T("../../x86-Debug/bin/SandSExeHidden32.exe");
+    LPCTSTR HIDDEN_EXE_64_PATH = _T("../../x64-Debug/bin/SandSExeHidden64.exe");
 #else
-    LPCTSTR HIDDEN_EXE_PATH = _T("../../x64-Release/bin/SandSExeHidden.exe");
-#endif
-#else
-#ifndef NDEBUG
-    LPCTSTR HIDDEN_EXE_PATH = _T("../../x86-Debug/bin/SandSExeHidden.exe");
-#else
-    LPCTSTR HIDDEN_EXE_PATH = _T("../../x86-Release/bin/SandSExeHidden.exe");
-#endif
+    LPCTSTR HIDDEN_EXE_32_PATH = _T("../../x86-Release/bin/SandSExeHidden32.exe");
+    LPCTSTR HIDDEN_EXE_64_PATH = _T("../../x64-Release/bin/SandSExeHidden64.exe");
 #endif
 
 #ifndef _WIN64
     // 32bit
-    LPCTSTR CLASS_NAME = CLASS_NAME_32;
 
     // ref: https://blog.mono0x.net/2009/09/13/64bit-hook/
     bool IsWow64() {
@@ -65,7 +59,6 @@ namespace {
     }
 #else
     // 64bit
-    LPCTSTR CLASS_NAME = CLASS_NAME_64;
 #endif
 
     LRESULT CALLBACK WndProc(
@@ -74,13 +67,12 @@ namespace {
         const WPARAM wParam,
         const LPARAM lParam)
     {
+        if (message == WM_UPDATE_IME_STATE) {
+            LLKeyboardHook::setImeState(wParam);
+            return 0;
+        }
         switch (message)
         {
-        case WM_UPDATE_IME_STATE:
-        {
-            LLKeyboardHook::setImeState(wParam);
-            break;
-        }
         case TrayWindow::WM_USER_TRAYNOTIFYICON:
             trayWnd->onTrayNotify(wParam, lParam);
             break;
@@ -95,7 +87,8 @@ namespace {
         }
         case WM_DESTROY:
         {
-            ::SendMessage(::FindWindow(CLASS_NAME_64, 0), WM_CLOSE, 0, 0);
+            ::SendMessage(::FindWindow(CLASS_NAME_HIDDEN_32, 0), WM_CLOSE, 0, 0);
+            ::SendMessage(::FindWindow(CLASS_NAME_HIDDEN_64, 0), WM_CLOSE, 0, 0);
             PostQuitMessage(0);
             break;
         }
@@ -141,12 +134,24 @@ int APIENTRY wWinMain(
     // Perform application initialization:
     ::hInst = hInstance;
 
+    TCHAR szPath[MAX_PATH];
+    GetModuleFileName(0, szPath, MAX_PATH);
+    PathRemoveFileSpec(szPath);
+    SetCurrentDirectory(szPath);
+
     // 多重起動防止
     {
         HWND hWnd = ::FindWindow(CLASS_NAME, 0);
         if (hWnd) {
             ::SendMessage(hWnd, WM_CLOSE, 0, 0);
         }
+    }
+
+    { // 32bit版のhiddenWindowを起動する
+        STARTUPINFO si;
+        ::GetStartupInfo(&si);
+        PROCESS_INFORMATION pi;
+        ::CreateProcess(HIDDEN_EXE_32_PATH, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi);
     }
     
 #ifndef _WIN64
@@ -157,17 +162,15 @@ int APIENTRY wWinMain(
         ::GetStartupInfo(&si);
         PROCESS_INFORMATION pi;
         // 64bit版のhiddenWindowを起動する
-        ::CreateProcess(HIDDEN_EXE_PATH, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi);
+        ::CreateProcess(HIDDEN_EXE_64_PATH, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi);
     }
 #else
     // 64bit
-    if (!::FindWindow(CLASS_NAME_32, 0)) {
-        // 32bit版のプログラムが実行されていない場合
+    { // 64bit版のhiddenWindowを起動する
         STARTUPINFO si;
         ::GetStartupInfo(&si);
         PROCESS_INFORMATION pi;
-        // 32bit版のhiddenWindowを起動する
-        ::CreateProcess(HIDDEN_EXE_PATH, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi);
+        ::CreateProcess(HIDDEN_EXE_64_PATH, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi);
     }
 #endif
 
@@ -188,7 +191,7 @@ int APIENTRY wWinMain(
     const HWND hWnd = trayWnd->getHWnd();
     OutputDebugString(std::to_wstring((int)hWnd).c_str());
     LLKeyboardHook llkbh(hWnd);
-    KeyboardHook kbh(hWnd);
+    OutputDebugString(((std::wstring)(L"Error: ") + std::to_wstring(::GetLastError())).c_str());
 
 	// Main message loop
 	MSG msg;

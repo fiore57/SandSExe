@@ -48,11 +48,18 @@ add_executable (SandSExeHidden WIN32 "${sands_exe_hidden}")
 set_target_properties(SandSExeHidden PROPERTIES COMPILE_FLAGS "/subsystem:windows")
 
 # プリコンパイル済みヘッダ
-target_precompile_headers(SandSExeHidden PRIVATE pch.h)
+target_precompile_headers(SandSExeHidden PRIVATE pch.hpp)
+
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set_target_properties(SandSExeHidden PROPERTIES OUTPUT_NAME "SandSExeHidden64")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	set_target_properties(SandSExeHidden PROPERTIES OUTPUT_NAME "SandSExeHidden32")
+endif()
 
 #
 # link
 #
 target_link_libraries(SandSExeHidden shell32.lib)
 target_link_libraries(SandSExeHidden comctl32.lib)
-target_link_libraries(SandSExeHidden SandSDll64)
+target_link_libraries(SandSExeHidden shlwapi.lib)
+# target_link_libraries(SandSExeHidden "${CMAKE_BINARY_DIR}/SandSDll/SandSDll64.lib")

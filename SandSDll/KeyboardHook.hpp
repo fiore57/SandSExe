@@ -1,27 +1,7 @@
 #pragma once
-#include "pch.h"
+#include "pch.hpp"
 
-#ifdef _WIN32
-    #ifdef EXPORT_
-    #define EXPORT_API_ __declspec(dllexport)
-    #else
-    #define EXPORT_API_ __declspec(dllimport)
-    #endif
-#else
-    #define EXPORT_API_
-#endif
+#define EXPORT_API_ extern "C"
 
-class EXPORT_API_ KeyboardHook {
-public:
-    explicit KeyboardHook(HWND hWnd);
-    ~KeyboardHook();
-
-    KeyboardHook() = default;
-    KeyboardHook(const KeyboardHook&) = default;
-    KeyboardHook(KeyboardHook&&) = default;
-    KeyboardHook& operator=(const KeyboardHook&) = default;
-    KeyboardHook& operator=(KeyboardHook&&) = default;
-
-private:
-    const HWND hWnd = 0;
-};
+EXPORT_API_ BOOL WINAPI StartHook(HWND);
+EXPORT_API_ BOOL WINAPI FinishHook();

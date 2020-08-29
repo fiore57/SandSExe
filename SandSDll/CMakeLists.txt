@@ -36,6 +36,7 @@ file(GLOB sands_dll
 	"*.cpp"
 	"*/*.cpp"
 	"*.rc"
+	"*.def"
 )
 add_library(SandSDll STATIC SHARED "${sands_dll}")
 
@@ -47,7 +48,14 @@ add_library(SandSDll STATIC SHARED "${sands_dll}")
 set_target_properties(SandSDll PROPERTIES COMPILE_FLAGS "")
 
 # プリコンパイル済みヘッダ
-target_precompile_headers(SandSDll PRIVATE pch.h)
+target_precompile_headers(SandSDll PRIVATE pch.hpp)
+
+# dllファイル名を変更
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set_target_properties(SandSDll PROPERTIES OUTPUT_NAME "SandSDll64")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	set_target_properties(SandSDll PROPERTIES OUTPUT_NAME "SandSDll32")
+endif()
 
 #
 # link

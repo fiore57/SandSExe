@@ -24,12 +24,12 @@ namespace {
         const auto curMode = Config::getIns()->getCurMode();
         // off なら何もしない
         if (curMode == Config::eMode::Off) {
-            return ::CallNextHookEx(g_hLLKeyHook, nCode, wp, lp);
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
 
         KBDLLHOOKSTRUCT* kbs = (KBDLLHOOKSTRUCT*)lp;
         if (kbs->flags & LLKHF_INJECTED) {
-            return ::CallNextHookEx(g_hLLKeyHook, nCode, wp, lp);
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
 
 
@@ -39,11 +39,11 @@ namespace {
 
         // japanese only かつ （IME off または 直接入力）なら何もしない
         if (curMode == Config::eMode::JapaneseOnly && LLKeyboardHook::getImeState() <= 0) {
-            return CallNextHookEx(g_hLLKeyHook, nCode, wp, lp);
+            return CallNextHookEx(nullptr, nCode, wp, lp);
         }
         // IME on only かつ IME off なら何もしない
         if (curMode == Config::eMode::IMEOnOnly && LLKeyboardHook::getImeState < 0) {
-            return CallNextHookEx(g_hLLKeyHook, nCode, wp, lp);
+            return CallNextHookEx(nullptr, nCode, wp, lp);
         }
 
         INPUT input;
@@ -104,7 +104,7 @@ namespace {
                 spacePressedTime.reset();
                 otherKeyInput = true;
             }
-            return ::CallNextHookEx(g_hLLKeyHook, nCode, wp, lp);
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
     }
 }
@@ -114,8 +114,14 @@ LLKeyboardHook::LLKeyboardHook(const HWND hwnd)
     : hWnd(hwnd)
 {
     HINSTANCE hInst;
+
+#ifndef _WIN64
+    // 32bit
+    hInst = (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE);
+#else
+    // 64bit
     hInst = (HINSTANCE)GetWindowLong(hWnd, GWLP_HINSTANCE);
-    // hInst = (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE);
+#endif
 
     g_hLLKeyHook = SetWindowsHookEx(WH_KEYBOARD_LL, //フック関数のタイプ
         (HOOKPROC)LowLevelKeyboardProc, //フックプロシージャのアドレス

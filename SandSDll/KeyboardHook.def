@@ -1,0 +1,6 @@
+SECTIONS
+	.shareddata READ WRITE SHARED
+
+EXPORTS
+  StartHook @1
+  FinishHook @2

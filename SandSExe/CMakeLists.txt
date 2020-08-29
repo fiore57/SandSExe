@@ -58,4 +58,4 @@ target_precompile_headers(SandSExe PRIVATE pch.h)
 #
 target_link_libraries(SandSExe shell32.lib)
 target_link_libraries(SandSExe comctl32.lib)
-target_link_libraries(SandSExe SandSDll)
+target_link_libraries(SandSExe shlwapi.lib)

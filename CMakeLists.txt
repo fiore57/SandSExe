@@ -28,12 +28,10 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 endif()
 
-include_directories("${CMAKE_BINARY_DIR}/SandSDll")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # サブプロジェクトを含めます。
 add_subdirectory ("SandSDll")
-add_subdirectory ("SandSDll64")
 add_subdirectory ("SandSExe")
 add_subdirectory ("SandSExeHidden")
