@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pch.h"
+#include "pch.hpp"
 #include "Singleton.hpp"
 #include "resource.h"
 #include <algorithm>

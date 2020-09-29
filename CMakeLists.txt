@@ -1,7 +1,4 @@
-﻿# CMakeList.txt : 最上位の CMake プロジェクト ファイル。グローバル構成を行います
-# また、サブプロジェクトをここに含めます。
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.16)
 
 # 言語の設定
 enable_language(CXX)
@@ -16,6 +13,32 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project ("SandS")
 
 #
+# info
+#
+message("# SandS")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	message("## x64")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	message("## x86")
+else()
+	message("## x??")
+endif()
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	message("## Debug")
+elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	message("## Release")
+endif()
+
+#
+# macro
+#
+if(MSVC)
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /D_DEBUG")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DUNICODE /D_UNICODE")
+endif()
+
+#
 # warning
 #
 if(MSVC)
@@ -28,10 +51,22 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 endif()
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../release")
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../release")
+endif()
 
-# サブプロジェクトを含めます。
-add_subdirectory ("SandSDll")
-add_subdirectory ("SandSExe")
-add_subdirectory ("SandSExeHidden")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	# x64
+	add_subdirectory ("SandSDll")
+	add_subdirectory ("SandSHidden")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	# x86
+	add_subdirectory ("SandSDll")
+	add_subdirectory ("SandSExe")
+	add_subdirectory ("SandSHidden")
+endif()
+

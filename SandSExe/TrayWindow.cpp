@@ -1,8 +1,7 @@
-#include "pch.h"
+#include "pch.hpp"
 #include "TrayWindow.hpp"
 
 #include <shellapi.h>
-#include <stdexcept>
 #include <cassert>
 
 namespace {
@@ -11,10 +10,9 @@ namespace {
 }
 
 TrayWindow::TrayWindow(
-    const LPCTSTR szWindowClass,
-    const LPCTSTR szTitle,
-    const HINSTANCE hInstance,
-    const int nCmdShow)
+    LPCTSTR szWindowClass,
+    LPCTSTR szTitle,
+    const HINSTANCE hInstance)
     : hWnd(
         ::CreateWindowEx(
             WS_EX_TOOLWINDOW, // ツールウィンドウ
@@ -37,7 +35,7 @@ TrayWindow::TrayWindow(
 
 void TrayWindow::notifyIcon(
     const eNotifyIconMessage nim,
-    const HICON hIcon,
+    const HICON hicon,
     const LPCTSTR pszTip)
 {
     NOTIFYICONDATA nid = {};
@@ -48,11 +46,11 @@ void TrayWindow::notifyIcon(
     nid.uCallbackMessage = WM_USER_TRAYNOTIFYICON;
     nid.uFlags = NIF_MESSAGE;
 
-    if (hIcon != nullptr && TrayWindow::hIcon != hIcon) {
+    if (hicon != nullptr && TrayWindow::hIcon != hicon) {
         // アイコン変更
         nid.uFlags |= NIF_ICON;
-        nid.hIcon = hIcon;
-        TrayWindow::hIcon = hIcon;
+        nid.hIcon = hicon;
+        TrayWindow::hIcon = hicon;
     }
 
     if (pszTip != nullptr) {
@@ -81,8 +79,8 @@ void TrayWindow::onTrayNotify(
     const UINT wParam,
     const LONG lParam)
 {
-    UINT uiIconId = static_cast<UINT>(wParam);
-    UINT uiMouseMsg = static_cast<UINT>(lParam);
+    const UINT uiIconId = static_cast<UINT>(wParam);
+    const UINT uiMouseMsg = static_cast<UINT>(lParam);
 
     if (ID_ICON != uiIconId) return;
 

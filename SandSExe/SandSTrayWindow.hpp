@@ -1,4 +1,6 @@
-#include "pch.h"
+#pragma once
+#include "pch.hpp"
+
 #include "TrayWindow.hpp"
 
 class SandSTrayWindow : public TrayWindow {
@@ -6,8 +8,7 @@ public:
     SandSTrayWindow(
         LPCTSTR szWindowClass,
         LPCTSTR szTitle,
-        HINSTANCE hInstance,
-        int nCmdShow);
+        HINSTANCE hInstance);
     ~SandSTrayWindow();
 
     void onLButtonClick() override;

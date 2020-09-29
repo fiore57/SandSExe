@@ -4,3 +4,7 @@
 #include <windows.h>
 #include <tchar.h>
 #include <cstdint>
+#include <string>
+#include <sstream>
+#include <optional>
+#include <stdexcept>

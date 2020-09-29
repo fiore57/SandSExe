@@ -1,16 +1,16 @@
 #include "pch.hpp"
 
 #include "KeyboardHook.hpp"
-#include "../SandSDll/KeyboardHook.hpp"
+#include "../SandSDll/Hook.hpp"
 
 namespace {
 #ifndef _WIN64
     // 32bit
-    constexpr auto HOOK_DLL_FILE_W = L"SandSDll32.dll";
-    constexpr auto HOOK_DLL_FILE_A = "SandSDll32.dll";
+    constexpr auto HOOK_DLL_FILE_W = L"SandS32.dll";
+    constexpr auto HOOK_DLL_FILE_A = "SandS32.dll";
 #else
-    constexpr auto HOOK_DLL_FILE_W = L"SandSDll64.dll";
-    constexpr auto HOOK_DLL_FILE_A = "SandSDll64.dll";
+    constexpr auto HOOK_DLL_FILE_W = L"SandS64.dll";
+    constexpr auto HOOK_DLL_FILE_A = "SandS64.dll";
 #endif
 }
 
@@ -37,9 +37,9 @@ KeyboardHook::KeyboardHook(HWND hwnd)
 
 KeyboardHook::~KeyboardHook()
 {
-    auto finishHook = reinterpret_cast<decltype(::FinishHook)*>(::GetProcAddress(hDll, "FinishHook"));
-    if (finishHook) {
-        (*finishHook)();
+    auto endHook = reinterpret_cast<decltype(::EndHook)*>(::GetProcAddress(hDll, "EndHook"));
+    if (endHook) {
+        (*endHook)();
     }
     ::FreeLibrary(hDll);
 }

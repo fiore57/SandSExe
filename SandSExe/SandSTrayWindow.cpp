@@ -2,9 +2,9 @@
 
 #include "resource.h"
 #include "Config.hpp"
+#include "./Define.hpp"
 
 #include <commctrl.h>
-#include <sstream>
 
 namespace {
     // Message handler for config box
@@ -118,12 +118,12 @@ namespace {
 SandSTrayWindow::SandSTrayWindow(
     const LPCTSTR szWindowClass,
     const LPCTSTR szTitle,
-    const HINSTANCE hInstance,
-    const int nCmdShow)
-    : TrayWindow(szWindowClass, szTitle, hInstance, nCmdShow)
+    const HINSTANCE hInstance)
+    : TrayWindow(szWindowClass, szTitle, hInstance)
 {
-    const HICON hIcon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TEST));
-    notifyIcon(eNotifyIconMessage::Add, hIcon, _T("SandS(Enable)"));
+    const auto hicon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TEST));
+    // notifyIcon(eNotifyIconMessage::Add, hicon, _T("SandS(Enable)"));
+    notifyIcon(eNotifyIconMessage::Add, hicon, fiore::sands::WINDOW_TITLE);
 }
 
 SandSTrayWindow::~SandSTrayWindow()
@@ -134,6 +134,7 @@ SandSTrayWindow::~SandSTrayWindow()
 void SandSTrayWindow::onLButtonClick()
 {
     // TODO: ON/OFFの切り替え
+    /*
     if (isSandSEnabled) {
         isSandSEnabled = false;
         const HICON hIcon = ::LoadIcon(getHInst(), MAKEINTRESOURCE(IDI_SANDSEXE));
@@ -144,6 +145,7 @@ void SandSTrayWindow::onLButtonClick()
         const HICON hIcon = ::LoadIcon(getHInst(), MAKEINTRESOURCE(IDI_TEST));
         notifyIcon(eNotifyIconMessage::Modify, hIcon, _T("SandS(Enable)"));
     }
+    */
 }
 
 void SandSTrayWindow::onRButtonClick()
@@ -151,19 +153,19 @@ void SandSTrayWindow::onRButtonClick()
     POINT pt;
     ::GetCursorPos(&pt);
 
-    const HWND hWnd = getHWnd();
-    const HINSTANCE hInst = getHInst();
+    const HWND hwnd = getHWnd();
+    const HINSTANCE hinst = getHInst();
 
-    const HMENU hMenu = ::LoadMenu(hInst, MAKEINTRESOURCE(IDM_TRAY_R));
+    const HMENU hMenu = ::LoadMenu(hinst, MAKEINTRESOURCE(IDM_TRAY_R));
     if (!hMenu) {
         // メニューが読み込めなかった
         return;
     }
     const HMENU hPopup = ::GetSubMenu(hMenu, 0);
 
-    ::SetForegroundWindow(hWnd);
-    ::TrackPopupMenu(hPopup, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hWnd, nullptr);
-    ::PostMessage(hWnd, WM_NULL, 0, 0);
+    ::SetForegroundWindow(hwnd);
+    ::TrackPopupMenu(hPopup, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hwnd, nullptr);
+    ::PostMessage(hwnd, WM_NULL, 0, 0);
 }
 
 // 何らかの操作を行った場合、trueを返す
@@ -187,12 +189,12 @@ bool SandSTrayWindow::onMenuSelected(
 
 void SandSTrayWindow::onAppConfig()
 {
-    ::DialogBox(getHInst(), MAKEINTRESOURCE(IDD_CONFIGBOX), getHWnd(), ConfigProc);
+    ::DialogBox(getHInst(), MAKEINTRESOURCE(IDD_CONFIGBOX), getHWnd(), ::ConfigProc);
 }
 
 void SandSTrayWindow::onAppAbout()
 {
-    ::DialogBox(getHInst(), MAKEINTRESOURCE(IDD_ABOUTBOX), getHWnd(), AboutProc);
+    ::DialogBox(getHInst(), MAKEINTRESOURCE(IDD_ABOUTBOX), getHWnd(), ::AboutProc);
 }
 
 void SandSTrayWindow::onAppExit()

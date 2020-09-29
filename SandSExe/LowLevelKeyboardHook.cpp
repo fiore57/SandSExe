@@ -1,16 +1,14 @@
-#include "pch.h"
+#include "pch.hpp"
 #include "LowLevelKeyboardHook.hpp"
-#include "../SandSDll/KeyboardHook.hpp"
+
+#include "../SandSDll/Hook.hpp"
 #include "Config.hpp"
-#include <sstream>
+
 #include <chrono>
-#include <optional>
 
 std::int32_t LLKeyboardHook::imeState = 0;
 
 namespace {
-    HHOOK g_hLLKeyHook;
-
     bool otherKeyInput = false;
 
     using system_clock = std::chrono::system_clock;
@@ -21,6 +19,10 @@ namespace {
         const WPARAM wp,
         const LPARAM lp)
     {
+        if (nCode != HC_ACTION) {
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
+        }
+
         const auto curMode = Config::getIns()->getCurMode();
         // off なら何もしない
         if (curMode == Config::eMode::Off) {
@@ -32,18 +34,13 @@ namespace {
             return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
 
-
-        std::wstringstream ss;
-        ss << L"IME: " << LLKeyboardHook::getImeState() << L'\n';
-        OutputDebugString(ss.str().c_str());
-
         // japanese only かつ （IME off または 直接入力）なら何もしない
         if (curMode == Config::eMode::JapaneseOnly && LLKeyboardHook::getImeState() <= 0) {
-            return CallNextHookEx(nullptr, nCode, wp, lp);
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
         // IME on only かつ IME off なら何もしない
         if (curMode == Config::eMode::IMEOnOnly && LLKeyboardHook::getImeState < 0) {
-            return CallNextHookEx(nullptr, nCode, wp, lp);
+            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
 
         INPUT input;
@@ -104,39 +101,27 @@ namespace {
                 spacePressedTime.reset();
                 otherKeyInput = true;
             }
-            return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
+        return ::CallNextHookEx(nullptr, nCode, wp, lp);
     }
 }
-
 
 LLKeyboardHook::LLKeyboardHook(const HWND hwnd)
     : hWnd(hwnd)
 {
-    HINSTANCE hInst;
-
-#ifndef _WIN64
-    // 32bit
-    hInst = (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE);
-#else
-    // 64bit
-    hInst = (HINSTANCE)GetWindowLong(hWnd, GWLP_HINSTANCE);
-#endif
-
-    g_hLLKeyHook = SetWindowsHookEx(WH_KEYBOARD_LL, //フック関数のタイプ
-        (HOOKPROC)LowLevelKeyboardProc, //フックプロシージャのアドレス
-        hInst, //フックプロシージャが入っているインスタンスハンドル
+    hLLKeyHook = ::SetWindowsHookEx(
+        WH_KEYBOARD_LL, //フック関数のタイプ
+        ::LowLevelKeyboardProc, //フックプロシージャのアドレス
+        ::GetModuleHandle(0), //フックプロシージャが入っているインスタンスハンドル
         0); //フックされるスレッド　０ならすべてのスレッド
-    if (g_hLLKeyHook == NULL) {
-        ::MessageBox(hWnd, L"フック開始に失敗", L"Error", MB_OK);
-        throw "Error";
+
+    if (!hLLKeyHook) {
+        throw std::runtime_error("failed to start LowLevelKeyboardHook");
     }
 }
 
 LLKeyboardHook::~LLKeyboardHook()
 {
-    if (!UnhookWindowsHookEx(g_hLLKeyHook)) {
-        ::MessageBox(hWnd, L"フック解除に失敗", L"Error", MB_OK);
-    }
+    if(hLLKeyHook) ::UnhookWindowsHookEx(hLLKeyHook);
 }
 

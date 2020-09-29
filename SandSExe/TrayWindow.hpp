@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "pch.hpp"
 
 class TrayWindow {
 public:
@@ -8,8 +8,7 @@ public:
     TrayWindow(
         LPCTSTR szWindowClass,
         LPCTSTR szTitle,
-        HINSTANCE hInstance,
-        int nCmdShow);
+        HINSTANCE hInstance);
 
     enum class eNotifyIconMessage {
         Add, Modify, Delete

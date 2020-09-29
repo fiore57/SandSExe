@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pch.h"
+#include "pch.hpp"
 
 template <class T>
 class Singleton {
