@@ -39,14 +39,23 @@ namespace {
         }
         return 0;
     }
+
+    bool isFromSandSExe() {
+        return std::wstring(::GetCommandLine()) == fiore::sands::SANDS_HIDDEN_KEY;
+    }
 }
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE /* hPrevInstance */,
-	_In_ LPWSTR /* lpCmdLine */,
+	_In_ LPWSTR lpCmdLine ,
 	_In_ int /* nCmdShow */)
 {
+    if (!::isFromSandSExe()) {
+        ::MessageBox(nullptr, _T("このファイルは実行できません。SandSExe.exe を実行してください"), _T("Error"), MB_OK);
+        ::exit(1);
+    }
+
     { // 多重起動防止
         HWND hWnd = ::FindWindow(CLASS_NAME, 0);
         if (hWnd) {

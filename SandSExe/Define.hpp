@@ -9,4 +9,6 @@ namespace fiore::sands {
     constexpr auto CLASS_NAME_TRAY = _T("SandSTrayWindowClass");
 
     constexpr auto WINDOW_TITLE = _T("SandS");
+
+    constexpr auto SANDS_HIDDEN_KEY = _T("CallFromSandSExe");
 }

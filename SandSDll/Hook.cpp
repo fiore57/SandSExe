@@ -17,11 +17,13 @@ HHOOK g_hKeyHook = 0;
 std::int32_t g_imeState = 0;
 #pragma data_seg()
 
-void enableChangeWindowMessageFilter() {
-    ::ChangeWindowMessageFilterEx(g_hWnd, fiore::sands::WM_UPDATE_IME_STATE, MSGFLT_ALLOW, 0);
-}
-void disableChangeWindowMessageFilter() {
-    ::ChangeWindowMessageFilterEx(g_hWnd, fiore::sands::WM_UPDATE_IME_STATE, MSGFLT_RESET, 0);
+namespace {
+    void enableChangeWindowMessageFilter() {
+        ::ChangeWindowMessageFilterEx(g_hWnd, fiore::sands::WM_UPDATE_IME_STATE, MSGFLT_ALLOW, 0);
+    }
+    void disableChangeWindowMessageFilter() {
+        ::ChangeWindowMessageFilterEx(g_hWnd, fiore::sands::WM_UPDATE_IME_STATE, MSGFLT_RESET, 0);
+    }
 }
 
 void updateImeState(const std::int32_t newImeState) {

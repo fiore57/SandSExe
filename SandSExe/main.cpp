@@ -108,8 +108,9 @@ namespace {
         STARTUPINFO si;
         ::GetStartupInfo(&si);
         PROCESS_INFORMATION pi;
+        std::wstring commandLine = fiore::sands::SANDS_HIDDEN_KEY;
         if (!::CreateProcess(
-            exePath, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi)) {
+            exePath, commandLine.data(), 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi)) {
             std::stringstream ss;
             std::wstring tmp(exePath);
             ss << "Can't open " << std::string(std::begin(tmp), std::end(tmp));
