@@ -39,7 +39,7 @@ namespace {
             return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
         // IME on only かつ IME off なら何もしない
-        if (curMode == Config::eMode::IMEOnOnly && LLKeyboardHook::getImeState < 0) {
+        if (curMode == Config::eMode::IMEOnOnly && LLKeyboardHook::getImeState() < 0) {
             return ::CallNextHookEx(nullptr, nCode, wp, lp);
         }
 

@@ -112,7 +112,7 @@ namespace {
             exePath, 0, 0, 0, TRUE, NORMAL_PRIORITY_CLASS, 0, 0, &si, &pi)) {
             std::stringstream ss;
             std::wstring tmp(exePath);
-            ss << "Can't open " << std::string(tmp.begin(), tmp.end());
+            ss << "Can't open " << std::string(std::begin(tmp), std::end(tmp));
             throw std::runtime_error(ss.str().c_str());
         }
         ::CloseHandle(pi.hProcess);
@@ -155,7 +155,7 @@ int APIENTRY wWinMain(
         std::stringstream ss;
         ss << "runtime_error: " << e.what() << '\n';
         std::string s = ss.str();
-        ::MessageBox(nullptr, std::wstring(s.begin(), s.end()).c_str(), _T("Error"), MB_OK);
+        ::MessageBox(nullptr, std::wstring(std::begin(s), std::end(s)).c_str(), _T("Error"), MB_OK);
         ::SendMessage(::FindWindow(fiore::sands::CLASS_NAME_HIDDEN_32, 0), WM_CLOSE, 0, 0);
         ::SendMessage(::FindWindow(fiore::sands::CLASS_NAME_HIDDEN_64, 0), WM_CLOSE, 0, 0);
         ::exit(1);

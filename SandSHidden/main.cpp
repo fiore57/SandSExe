@@ -64,7 +64,7 @@ int APIENTRY wWinMain(
         std::stringstream ss;
         ss << "runtime_error: " << e.what() << '\n';
         std::string s = ss.str();
-        ::MessageBox(nullptr, std::wstring(s.begin(), s.end()).c_str(), _T("Error"), MB_OK);
+        ::MessageBox(nullptr, std::wstring(std::begin(s), std::end(s)).c_str(), _T("Error"), MB_OK);
         ::exit(1);
     }
 

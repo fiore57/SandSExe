@@ -14,7 +14,6 @@ file(GLOB sands_exe
 	"*/*.cpp"
 	"*.rc"
 )
-message("${sands_exe}")
 add_executable (SandSExe WIN32 "${sands_exe}")
 
 #
