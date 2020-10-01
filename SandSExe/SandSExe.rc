@@ -1,15 +1,6 @@
 #include "resource.h"
 
-#define APSTUDIO_READONLY_SYMBOLS
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE resource.
-//
-#define APSTUDIO_HIDDEN_SYMBOLS
 #include "windows.h"
-#undef APSTUDIO_HIDDEN_SYMBOLS
-/////////////////////////////////////////////////////////////////////////////
-#undef APSTUDIO_READONLY_SYMBOLS
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
@@ -22,9 +13,7 @@ LANGUAGE 9, 1
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 
-IDI_SANDSEXE       ICON         "SandSExe.ico"
-IDI_SMALL               ICON         "small.ico"
-IDI_TEST ICON "test.ico"
+IDI_SANDSEXE    ICON    "SandSExeIcon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -42,18 +31,6 @@ BEGIN
         MENUITEM "èIóπ", IDM_APP_EXIT
     END
 END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Accelerator
-//
-
-IDC_SANDSEXE ACCELERATORS
-BEGIN
-    "?",            IDM_ABOUT,              ASCII,  ALT
-    "/",            IDM_ABOUT,              ASCII,  ALT
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -86,66 +63,6 @@ BEGIN
     CONTROL         "ì˙ñ{åÍì¸óÕéûÇÃÇ›", IDC_RADIO2, "Button", BS_AUTORADIOBUTTON, 60, 60, 80, 10
     CONTROL         "IME óLå¯éûÇÃÇ›", IDC_RADIO3, "Button", BS_AUTORADIOBUTTON, 150, 60, 80, 10
     CONTROL         "èÌéû ON", IDC_RADIO4, "Button", BS_AUTORADIOBUTTON, 230, 60, 40, 10
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_ABOUTBOX, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 163
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 55
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-1 TEXTINCLUDE
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE
-BEGIN
-    "#ifndef APSTUDIO_INVOKED\r\n"
-    "#include ""targetver.h""\r\n"
-    "#endif\r\n"
-    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#include ""windows.h""\r\n"
-    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE
-BEGIN
-    "\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE
-BEGIN
-   IDC_SANDSEXE     "SANDSEXE"
-   IDS_APP_TITLE    "SandSExe"
-   IDM_TRAY_R       "SandSTrayR"
 END
 
 #endif

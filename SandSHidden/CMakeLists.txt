@@ -12,7 +12,6 @@ message("# SandSHidden")
 file(GLOB sands_hidden
 	"*.cpp"
 	"*/*.cpp"
-	"*.rc"
 )
 message("${sands_hidden}")
 add_executable (SandSHidden WIN32 "${sands_hidden}")

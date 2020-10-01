@@ -1,6 +1,5 @@
 #include "pch.hpp"
 
-#include "resource.h"
 #include "KeyboardHook.hpp"
 #include "HiddenWindow.hpp"
 #include "../SandSExe/Define.hpp"
@@ -77,17 +76,12 @@ int APIENTRY wWinMain(
         ::exit(1);
     }
 
-	HACCEL hAccelTable = ::LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SANDSEXE));
-
     // Main message loop
     MSG msg;
     while (::GetMessage(&msg, nullptr, 0, 0))
     {
-        if (!::TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            ::TranslateMessage(&msg);
-            ::DispatchMessage(&msg);
-        }
+        ::TranslateMessage(&msg);
+        ::DispatchMessage(&msg);
     }
 
     return static_cast<int>(msg.wParam);

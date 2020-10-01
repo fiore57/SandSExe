@@ -121,7 +121,7 @@ SandSTrayWindow::SandSTrayWindow(
     const HINSTANCE hInstance)
     : TrayWindow(szWindowClass, szTitle, hInstance)
 {
-    const auto hicon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TEST));
+    const auto hicon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SANDSEXE));
     // notifyIcon(eNotifyIconMessage::Add, hicon, _T("SandS(Enable)"));
     notifyIcon(eNotifyIconMessage::Add, hicon, fiore::sands::WINDOW_TITLE);
 }
