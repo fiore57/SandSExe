@@ -2,7 +2,7 @@
 
 SandS(Space and Shift) を Windows で使うためのソフトです。
 
-日本語入力時（直接入力モードでないとき）や、IME が ON のときのみ SandS を使う設定を用意しています。（ただし、この機能は CorvusSKK でのみ正常に動作することを確認しています）
+日本語入力時（直接入力モードでないとき）や、IME が ON のときのみ SandS を使う設定を用意しています。（ただし、この機能は [CorvusSKK](https://github.com/nathancorvussolis/corvusskk) でのみ正常に動作することを確認しています）
 
 ## 使用方法
 
@@ -32,7 +32,7 @@ SandS(Space and Shift) を Windows で使うためのソフトです。
 - `config.ini`・`SandS32.dll`・`SandS64.dll`・`SandSExe.exe`・`SandSHidden32.exe`・`SandSHidden64.exe` は、同じフォルダにそのままの名前で置いてください
 - このソフトを管理者権限なしで使用したい場合は、`SandSExe/CmakeLists.txt` の `level='requireAdministrator'` を `level='asInvoker'` に書き換えてビルドしてください
   - もちろん、この場合は管理者権限で動作しているソフトウェア上で SandS を利用することはできません。
-- IME によっては、設定の「日本語入力時のみ」「IME 有効時のみ」が正常に動作しません（例：MS-IME・Google 日本語入力・SKK 日本語入力 FEP など）。ご了承ください。
+- IME によっては、設定の「日本語入力時のみ」「IME 有効時のみ」が正常に動作しません（例：MS-IME・Google 日本語入力・[SKK 日本語入力 FEP](http://coexe.web.fc2.com/skkfep.html) など）。ご了承ください。
 - Windows ストアアプリでは動作しません
   - どうしても使いたい場合は、`SandSExe/CMakeLists.txt` の `uiAccess=false` を `uiAccess=true` にしてビルドし、[https://qiita.com/QianJin2013/items/d743c3c9557203aadadd](https://qiita.com/QianJin2013/items/d743c3c9557203aadadd) あたりを参考に自己署名証明書を作成してください。（Windows ストアアプリでの動作確認はしていませんので、自己責任でお願いします）
 - 製作者（fiore）は、このソフトウェアの使用によるいかなる損害も、その責任を一切負いません
