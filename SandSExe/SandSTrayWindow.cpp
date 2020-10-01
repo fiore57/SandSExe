@@ -1,6 +1,6 @@
 #include "SandSTrayWindow.hpp"
 
-#include "resource.h"
+#include "resource.hpp"
 #include "Config.hpp"
 #include "./Define.hpp"
 

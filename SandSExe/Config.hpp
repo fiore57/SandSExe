@@ -2,7 +2,7 @@
 
 #include "pch.hpp"
 #include "Singleton.hpp"
-#include "resource.h"
+#include "resource.hpp"
 #include <algorithm>
 
 class Config final : public Singleton<Config> {

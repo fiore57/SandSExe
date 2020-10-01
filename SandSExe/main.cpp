@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-#include "resource.h"
+#include "resource.hpp"
 #include "LowLevelKeyboardHook.hpp"
 #include "SandSTrayWindow.hpp"
 #include "./Define.hpp"
